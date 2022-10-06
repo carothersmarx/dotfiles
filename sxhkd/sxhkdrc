@@ -1,0 +1,131 @@
+#########################
+# wm independent hotkeys
+###########################
+
+# terminal emulator
+super + Return
+	alacritty
+
+# rofi program launcher
+super + @space
+	rofi -show drun
+
+# rofi program launcher
+super + Tab
+	rofi -show window
+
+# rofi power menu
+Pause
+	rofi -show power-menu -modi power-menu:~/.local/bin/rofi-power-menu --no-symbols
+
+# file manager 
+super + shift + f
+	pcmanfm
+
+# vivaldi
+super + shift + i
+	vivaldi-stable 
+
+# rofi iwd
+super + shift + n
+	/usr/local/bin/rofi-wifi-menu.sh
+
+# cmus
+super + shift + m
+	alacritty -e cmus
+
+# btm
+super + shift + b
+	alacritty -e btm
+
+#screenshot
+Print
+	scrot /home/carothersmarx/Pictures/Screenshots/'%Y-%m-%d-%H:%M:%S.png'
+
+shift + Print
+	scrot -f -s /home/carothersmarx/Pictures/Screenshots/'%Y-%m-%d-%H:%M:%S.png'
+
+alt + Print
+	scrot -u /home/carothersmarx/Pictures/Screenshots/'%Y-%m-%d-%H:%M:%S.png'
+
+
+###########################
+# bspwm hotkeys
+###########################
+
+# make sxhkd reload its configuration files
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# reload bspwmrc configuration file
+super + b
+	/home/carothersmarx/.config/bspwm/bspwmrc;
+
+# close window
+super + shift + w
+	bspc node -c
+
+# move focused window to the next workspace and then switch to that workspace
+super + shift + bracket{left,right}
+	id=$(bspc query --nodes --node); bspc node --to-desktop {prev,next}; bspc desktop --focus next; bspc node --focus ${id}
+
+# set the node flag to private
+#alt + p
+#bspc node -g private
+
+# === function keys =
+
+# alternate between the tiled and monocle layout
+super + m
+        bspc desktop -l next
+
+# swap the current node and the biggest window
+super + g
+        bspc node -s biggest.local
+
+# circulate windows
+super + 1
+	bspc node @/ -C forward
+
+super + 2
+	bspc node @/ -C backward
+
+# flip windows horizontal
+super + 3
+	bspc node @/ -F horizontal
+
+# flip windows vertical
+super + 4
+	bspc node @/ -F vertical
+
+# set the window state
+super + {t,shift + t,s,f}
+        bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# === focus/swap ===
+
+# focus the next/previous node
+super + {h,j,k,l}
+	bspc node -f {west,south,north,east}.local.!above
+
+# focus the next/previous desktop in the current monitor
+super + bracket{left,right}
+        bspc desktop -f {prev,next}.local
+
+#  expand/contract a window 
+super + alt + {h,j,k,l}
+  bspc node -z {left -20 0 || bspc node -z right -20 0, \
+                bottom 0 20 || bspc node -z top 0 20,\
+                top 0 -20 || bspc node -z bottom 0 -20,\
+                right 20 0 || bspc node -z left 20 0}
+
+super + {_,shift + }{h,j,k,l}
+	bspc node --{focus,swap} {west,south,north,east}
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+        bspc {desktop -f,node -d} '^{1-9,10}'
+
+# move a floating window
+super + {Left,Down,Up,Right}
+        bspc node -v {-20 0,0 20,0 -20,20 0}

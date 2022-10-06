@@ -1,0 +1,12 @@
+#titlebar {
+  display: none !important;
+}
+
+#header {
+  display: none !important;
+}
+
+/*Hide Start Page Settings Button*/
+.SpeedDialView-Settings-Button {
+    display: none;
+}

@@ -1,0 +1,38 @@
+#! /bin/sh
+
+sxhkd &
+
+bspc monitor -d I II III IV
+
+bspc config merge_overlapping_monitors true
+
+bspc config border_width        1
+bspc config window_gap          10
+
+bspc config top_padding 0
+bspc config left_padding 0
+bspc config right_padding 0
+bspc config bottom_padding 0
+bspc config normal_border_color "#b8bfcc"
+bspc config focused_border_color "#ECEFF4"
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+bspc config focus_follows_pointer true
+
+bspc config pointer_modifier mod4
+bspc config automatic_scheme alternate
+bspc config initial_polarity second_child
+bspc config pointer_action3 resize_side
+bspc config pointer_action3 resize_corner
+bspc config pointer_action1 move
+
+bspc rule -a Zathura state=tiled
+
+~/.fehbg &
+$HOME/.config/polybar/launch.sh &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+fcitx5 --replace -d &
+
+xsetroot -cursor_name left_ptr
